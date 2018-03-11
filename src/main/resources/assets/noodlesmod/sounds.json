@@ -1,0 +1,11 @@
+{
+	"grind": {
+		"category": "master",
+		"sounds": [
+		           {
+		        	   "name": "noodlesmod:grind",
+		        	   "stream": false
+		           }
+		          ]
+              }
+}
