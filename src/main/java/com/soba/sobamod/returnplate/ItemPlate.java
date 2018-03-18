@@ -1,6 +1,6 @@
 package com.soba.sobamod.returnplate;
 
-import com.soba.sobamod.SobaMod;
+import com.soba.sobamod.init.RegisterItem;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -25,7 +25,7 @@ public class ItemPlate extends ItemFood
 	    public ItemStack onEaten(ItemStack p_77654_1_, World p_77654_2_, EntityPlayer p_77654_3_)
 	    {
 	        super.onEaten(p_77654_1_, p_77654_2_, p_77654_3_);
-	        return new ItemStack(SobaMod.plate);
+	        return new ItemStack(RegisterItem.plate);
 	    }
 
 	    @Override

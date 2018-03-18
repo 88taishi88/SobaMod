@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class GuiIshiusu extends GuiContainer {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation("noodlesmod:textures/gui/ishiusu.png");
+	private static final ResourceLocation bground = new ResourceLocation("noodlesmod:textures/gui/ishiusu.png");
 
 	private final TileEntityIshiusu ishiusu;
 
@@ -26,25 +26,26 @@ public class GuiIshiusu extends GuiContainer {
 		this.ySize = 166;
 	}
 
+	public void drawGuiContainerForegroundLayer(int par1, int par2) {
+		String name = this.ishiusu.hasCustomInventoryName() ? this.ishiusu.getInventoryName()
+				: I18n.format(this.ishiusu.getInventoryName(), new Object[0]);
 
-    public void drawGuiContainerForegroundLayer(int par1, int par2) {
-    	String name = this.ishiusu.hasCustomInventoryName() ? this.ishiusu.getInventoryName() : I18n.format(this.ishiusu.getInventoryName(), new Object[0]);
-
-    	this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 6, 4210752);
-    	this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2, 4210752);
-    }
+		this.fontRendererObj.drawString(name, this.xSize / 2 - this.fontRendererObj.getStringWidth(name) / 2, 6,
+				4210752);
+		this.fontRendererObj.drawString(I18n.format("container.inventory", new Object[0]), 8, this.ySize - 96 + 2,
+				4210752);
+	}
 
 	protected void drawGuiContainerBackgroundLayer(float var1, int var2, int var3) {
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(bground);
 		int k = (this.width - this.xSize) / 2;
 		int l = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(k, l, 0, 0, xSize, ySize);
 
-		int i1 = 0;
-		i1 = this.ishiusu.getCookProgressScaled(24);
-        this.drawTexturedModalRect(k + 79, l + 34, 176, 0, i1 + 1, 16);
+		int progress = this.ishiusu.getGrindProgressScaled(24);
+		this.drawTexturedModalRect(k + 79, l + 34, 176, 0, progress + 1, 16);
 	}
 
 }

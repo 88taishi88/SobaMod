@@ -1,8 +1,9 @@
 package com.soba.sobamod.handler;
 
-import com.soba.sobamod.SobaMod;
+import com.soba.sobamod.SobaModCore;
 import com.soba.sobamod.container.ContainerIshiusu;
 import com.soba.sobamod.gui.GuiIshiusu;
+import com.soba.sobamod.init.RegisterOther;
 import com.soba.sobamod.tileentity.TileEntityIshiusu;
 
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -18,7 +19,7 @@ public class GuiHandler implements IGuiHandler {
 
 		if(entity != null) {
 			switch(ID) {
-			case SobaMod.guiIDIshiusu:
+			case RegisterOther.guiIDIshiusu:
 				if(entity instanceof TileEntityIshiusu) {
 					return new ContainerIshiusu(player.inventory, (TileEntityIshiusu) entity);
 				}
@@ -34,7 +35,7 @@ public class GuiHandler implements IGuiHandler {
 
 		if(entity != null) {
 			switch(ID) {
-			case SobaMod.guiIDIshiusu:
+			case RegisterOther.guiIDIshiusu:
 				if(entity instanceof TileEntityIshiusu) {
 					return new GuiIshiusu(player.inventory, (TileEntityIshiusu) entity);
 				}

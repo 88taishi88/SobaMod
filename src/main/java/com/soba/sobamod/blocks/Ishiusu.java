@@ -1,6 +1,8 @@
 package com.soba.sobamod.blocks;
 
-import com.soba.sobamod.SobaMod;
+import com.soba.sobamod.SobaModCore;
+import com.soba.sobamod.init.RegisterBlock;
+import com.soba.sobamod.init.RegisterOther;
 import com.soba.sobamod.tileentity.TileEntityIshiusu;
 
 import cpw.mods.fml.common.network.internal.FMLNetworkHandler;
@@ -43,7 +45,7 @@ public class Ishiusu extends BlockContainer{
     }
 
     public Item getItemDropped(World world, int x, int y, int z) {
-    	return Item.getItemFromBlock(SobaMod.blockIshiusu);
+    	return Item.getItemFromBlock(RegisterBlock.blockIshiusu);
     }
 
     public void onBlockAdded(World world, int x, int y, int z) {
@@ -82,7 +84,7 @@ public class Ishiusu extends BlockContainer{
 
 	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ) {
 		if(!world.isRemote) {
-			FMLNetworkHandler.openGui(player, SobaMod.instance, SobaMod.guiIDIshiusu, world, x, y, z);
+			FMLNetworkHandler.openGui(player, SobaModCore.instance, RegisterOther.guiIDIshiusu, world, x, y, z);
 		}
 		return true;
 	}

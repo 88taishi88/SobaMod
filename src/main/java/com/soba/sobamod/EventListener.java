@@ -1,5 +1,8 @@
 package com.soba.sobamod;
 
+import com.soba.sobamod.init.RegisterItem;
+import com.soba.sobamod.init.RegisterOther;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.ItemCraftedEvent;
@@ -35,45 +38,45 @@ public class EventListener
 
 	@SubscribeEvent
     public void pickup(ItemPickupEvent event){
-		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(SobaMod.sobanomi))){
+		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(RegisterItem.sobanomi))){
 			buckwheatFound = buckwheatFound + 1;
-			event.player.addStat(SobaMod.getBuckwheat, 1);
+			event.player.addStat(RegisterOther.getBuckwheat, 1);
 			this.triggerGetPlant(event);
 			this.triggerGet64Plant(event);
 		}
 
-		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(SobaMod.greenOnion))){
+		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(RegisterItem.greenOnion))){
 			greenOnionFound = greenOnionFound + 1;
 			this.triggerGetPlant(event);
 			this.triggerGet64Plant(event);
 		}
 
-		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(SobaMod.yam))){
+		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(RegisterItem.yam))){
 			yamFound = yamFound + 1;
 			this.triggerGetPlant(event);
 			this.triggerGet64Plant(event);
 		}
 
-		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(SobaMod.wasabi))){
+		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(RegisterItem.wasabi))){
 			wasabiFound = wasabiFound + 1;
 			this.triggerGetPlant(event);
 			this.triggerGet64Plant(event);
 		}
 
-		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(SobaMod.soyBean))){
+		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(RegisterItem.soyBean))){
 			soyFound = soyFound + 1;
 			this.triggerGetPlant(event);
 			this.triggerGet64Plant(event);
 		}
 
-		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(SobaMod.shrimp))){
-			event.player.addStat(SobaMod.getEbi, 1);
+		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(RegisterItem.shrimp))){
+			event.player.addStat(RegisterOther.getEbi, 1);
 			ebiFound = ebiFound + 1;
 			this.triggerGet64Ebi(event);
 		}
 
-		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(SobaMod.herring))){
-			event.player.addStat(SobaMod.getHerring, 1);
+		if(event.pickedUp.getEntityItem().isItemEqual(new ItemStack(RegisterItem.herring))){
+			event.player.addStat(RegisterOther.getHerring, 1);
 		}
 
 	}
@@ -81,7 +84,7 @@ public class EventListener
 	private void triggerGet64Ebi(ItemPickupEvent event) {
 		if(ebiFound >= 64)
 		{
-			event.player.addStat(SobaMod.get64Ebi, 1);
+			event.player.addStat(RegisterOther.get64Ebi, 1);
 		}
 	}
 
@@ -98,7 +101,7 @@ public class EventListener
 					{
 						if(soyFound >= 1)
 						{
-							event.player.addStat(SobaMod.getPlant, 1);
+							event.player.addStat(RegisterOther.getPlant, 1);
 						}
 					}
 				}
@@ -119,7 +122,7 @@ public class EventListener
 					{
 						if(soyFound >= 64)
 						{
-							event.player.addStat(SobaMod.get64Plant, 1);
+							event.player.addStat(RegisterOther.get64Plant, 1);
 						}
 					}
 				}
@@ -129,46 +132,46 @@ public class EventListener
 
 	@SubscribeEvent
     public void crafting(ItemCraftedEvent event){
-		if(event.crafting.getItem().equals(SobaMod.seirosoba)){
-			event.player.addStat(SobaMod.getSoba, 1);
+		if(event.crafting.getItem().equals(RegisterItem.seirosoba)){
+			event.player.addStat(RegisterOther.getSoba, 1);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.ebitensoba)){
+		if(event.crafting.getItem().equals(RegisterItem.ebitensoba)){
 			ebitenpuraFound = ebitenpuraFound + 1;
 			this.triggerGetDonmono(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.tororoSoba)){
+		if(event.crafting.getItem().equals(RegisterItem.tororoSoba)){
 			tororoFound = tororoFound + 1;
 			this.triggerGetDonmono(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.tanukiSoba)){
+		if(event.crafting.getItem().equals(RegisterItem.tanukiSoba)){
 			tanukiFound = tanukiFound + 1;
 			this.triggerGetDonmono(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.kitsuneSoba)){
+		if(event.crafting.getItem().equals(RegisterItem.kitsuneSoba)){
 			kitsuneFound = kitsuneFound + 1;
 			this.triggerGetDonmono(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.kakiageSoba)){
+		if(event.crafting.getItem().equals(RegisterItem.kakiageSoba)){
 			kakiageFound = kakiageFound + 1;
 			this.triggerGetDonmono(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.kinoTenSoba)){
+		if(event.crafting.getItem().equals(RegisterItem.kinoTenSoba)){
 			mushroomFound = mushroomFound + 1;
 			this.triggerGetDonmono(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.NishinSoba)){
+		if(event.crafting.getItem().equals(RegisterItem.NishinSoba)){
 			nishinFound = nishinFound + 1;
 			this.triggerGetDonmono(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.wankoSoba)){
+		if(event.crafting.getItem().equals(RegisterItem.wankoSoba)){
 			wankoFound = wankoFound + 1;
 			this.triggerCraftWanko(event);
 			this.triggerCraft100Wanko(event);
@@ -176,12 +179,12 @@ public class EventListener
 			this.triggerCraft500Wanko(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.seiro)){
+		if(event.crafting.getItem().equals(RegisterItem.seiro)){
 			seiroFound = seiroFound + 1;
 			this.triggerGetTableware(event);
 		}
 
-		if(event.crafting.getItem().equals(SobaMod.wankoSobaOwan)){
+		if(event.crafting.getItem().equals(RegisterItem.wankoSobaOwan)){
 			wanOwaFound = wanOwaFound + 1;
 			this.triggerGetTableware(event);
 		}
@@ -191,7 +194,7 @@ public class EventListener
 	{
 		if(wankoFound >= 1)
 		{
-			event.player.addStat(SobaMod.craftWanko, 1);
+			event.player.addStat(RegisterOther.craftWanko, 1);
 		}
 	}
 
@@ -199,14 +202,14 @@ public class EventListener
 	{
 		if(wankoFound >= 100)
 		{
-			event.player.addStat(SobaMod.craft100Wanko, 1);
+			event.player.addStat(RegisterOther.craft100Wanko, 1);
 		}
 	}
 
 	private void triggerCraft200Wanko(ItemCraftedEvent event) {
 		if(wankoFound >= 200)
 		{
-			event.player.addStat(SobaMod.craft200Wanko, 1);
+			event.player.addStat(RegisterOther.craft200Wanko, 1);
 		}
 	}
 
@@ -214,7 +217,7 @@ public class EventListener
 	{
 		if(wankoFound >= 500)
 		{
-			event.player.addStat(SobaMod.craft500Wanko, 1);
+			event.player.addStat(RegisterOther.craft500Wanko, 1);
 		}
 	}
 
@@ -235,7 +238,7 @@ public class EventListener
 							{
 								if(nishinFound >= 1)
 								{
-									event.player.addStat(SobaMod.getDonmono, 1);
+									event.player.addStat(RegisterOther.getDonmono, 1);
 								}
 							}
 						}
@@ -247,16 +250,16 @@ public class EventListener
 
 	@SubscribeEvent
 	public void smelting(ItemSmeltedEvent event){
-		if(event.smelting.getItem().equals(SobaMod.yakisoba)){
-			event.player.addStat(SobaMod.getYakisoba, 1);
+		if(event.smelting.getItem().equals(RegisterItem.yakisoba)){
+			event.player.addStat(RegisterOther.getYakisoba, 1);
 		}
 
-		if(event.smelting.getItem().equals(SobaMod.plate)){
+		if(event.smelting.getItem().equals(RegisterItem.plate)){
 			plateFound = plateFound + 1;
 			this.triggerGetTableware(event);
 		}
 
-		if(event.smelting.getItem().equals(SobaMod.owan)){
+		if(event.smelting.getItem().equals(RegisterItem.owan)){
 			owanFound = owanFound + 1;
 			this.triggerGetTableware(event);
 		}
@@ -271,7 +274,7 @@ public class EventListener
 				{
 					if(wanOwaFound >= 1)
 					{
-						event.player.addStat(SobaMod.getTableware, 1);
+						event.player.addStat(RegisterOther.getTableware, 1);
 					}
 				}
 			}

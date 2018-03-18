@@ -5,15 +5,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import com.soba.sobamod.SobaMod;
+import com.soba.sobamod.init.RegisterItem;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class IshiusuRecipes {
-	private static final IshiusuRecipes smeltingBase = new IshiusuRecipes();
-    /** The list of smelting results. */
+	private static final IshiusuRecipes grindingBase = new IshiusuRecipes();
+    /** The list of grinding results. */
     private Map grindingList = new HashMap();
     private Map experienceList = new HashMap();
     private static final String __OBFID = "CL_00000085";
@@ -23,13 +23,13 @@ public class IshiusuRecipes {
      */
     public static IshiusuRecipes grinding()
     {
-        return smeltingBase;
+        return grindingBase;
     }
 
     private IshiusuRecipes()
     {
-        this.func_151396_a(Items.wheat, new ItemStack(SobaMod.flour), 0.35F);
-        this.func_151396_a(SobaMod.sobanomi, new ItemStack(SobaMod.sobako), 0.35F);
+        this.func_151396_a(Items.wheat, new ItemStack(RegisterItem.flour), 0.35F);
+        this.func_151396_a(RegisterItem.sobanomi, new ItemStack(RegisterItem.sobako), 0.35F);
     }
 
     public void func_151396_a(Item item, ItemStack itemstack, float experience)

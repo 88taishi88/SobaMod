@@ -1,6 +1,6 @@
 package com.soba.sobamod.returnplate;
 
-import com.soba.sobamod.SobaMod;
+import com.soba.sobamod.init.RegisterItem;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -26,7 +26,7 @@ public class ItemOwan extends ItemFood
     {
         super.onEaten(p_77654_1_, p_77654_2_, p_77654_3_);
         p_77654_2_.playSoundAtEntity(p_77654_3_, "noodlesmod:susuru", 1.0F, 1.0F);
-        return new ItemStack(SobaMod.owan);
+        return new ItemStack(RegisterItem.owan);
     }
 
     @Override

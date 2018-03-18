@@ -19,17 +19,17 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
     private static final int[] slotsBottom = new int[] {1};
     private static final int[] slotsSides = new int[] {0};
 
+    //0:input 1:output
     private ItemStack[] slots = new ItemStack [2];
-
-    public final int ishiusuSpeed = 100;
     /*
      * The number of ticks that the current item has been cooking for
      */
-    public int cookTime;
+    public int ishiusuCookTime = 0;
 
     /**
      * Returns the number of slots in the inventory.
      */
+    @Override
     public int getSizeInventory()
     {
         return this.slots.length;
@@ -38,6 +38,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
     /**
      * Returns the stack in slot i
      */
+    @Override
     public ItemStack getStackInSlot(int var1)
     {
         return this.slots[var1];
@@ -47,6 +48,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
      * Removes from an inventory slot (first arg) up to a specified number (second arg) of items and returns them in a
      * new stack.
      */
+    @Override
      public ItemStack decrStackSize(int var1, int var2) {
 		if(this.slots[var1] != null) {
 			ItemStack itemstack;
@@ -70,6 +72,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
      * When some containers are closed they call this on each slot, then drop whatever it returns as an EntityItem -
      * like when you close a workbench GUI.
      */
+    @Override
     public ItemStack getStackInSlotOnClosing(int i) {
         if(this.slots[i] != null) {
             ItemStack itemstack = this.slots[i];
@@ -82,6 +85,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
     /**
      * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
      */
+    @Override
     public void setInventorySlotContents(int i, ItemStack itemstack) {
         this.slots[i] = itemstack;
 
@@ -93,6 +97,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
     /**
      * Returns the name of the inventory
      */
+    @Override
     public String getInventoryName() {
         return this.hasCustomInventoryName() ? this.localizedName : "container.ishiusu";
     }
@@ -101,6 +106,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
     /**
      * Returns if the inventory is named
      */
+    @Override
     public boolean hasCustomInventoryName() {
         return this.localizedName != null && this.localizedName.length() > 0;
     }
@@ -109,6 +115,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
 		this.localizedName = displayName;
 	}
 
+    @Override
     public void readFromNBT(NBTTagCompound nbt)
     {
         super.readFromNBT(nbt);
@@ -124,17 +131,18 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
             }
         }
 
-        this.cookTime = (int)nbt.getShort("CookTime");
+        this.ishiusuCookTime = (int)nbt.getShort("CookTime");
 
         if(nbt.hasKey("CustomName")) {
             this.localizedName = nbt.getString("CustomName");
         }
     }
 
+    @Override
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
 
-        nbt.setShort("CookTime", (short)this.cookTime);
+        nbt.setShort("CookTime", (short)this.ishiusuCookTime);
 
         NBTTagList list = new NBTTagList();
 
@@ -157,42 +165,43 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
     /**
      * Returns the maximum stack size for a inventory slot.
      */
+    @Override
     public int getInventoryStackLimit()
     {
         return 64;
     }
 
-    /**
-     * Returns an integer between 0 and the passed value representing how close the current item is to being completely
-     * cooked
-     */
     @SideOnly(Side.CLIENT)
-    public int getCookProgressScaled(int i)
-    {
-        return this.cookTime * i / this.ishiusuSpeed;
+    public int getGrindProgressScaled(int var1) {
+    	return this.ishiusuCookTime * var1 / 100;
     }
 
+    public boolean isGrinding() {
+    	return this.slots[0] != null;
+    }
+
+    @Override
     public void updateEntity()
     {
         boolean flag1 = false;
 
         if (!this.worldObj.isRemote)
         {
-            if (this.cookTime != 0 || this.slots[0] != null)
+            if (this.isGrinding())
             {
 
                 if (this.canGrind())
                 {
-                    ++this.cookTime;
+                    this.ishiusuCookTime++;
 
-                    if (this.cookTime == this.ishiusuSpeed)
+                    if (this.ishiusuCookTime == 100)
                     {
-                        this.cookTime = 0;
+                        this.ishiusuCookTime = 0;
                         this.grindItem();
                         flag1 = true;
                     }
                 } else {
-                    this.cookTime = 0;
+                    this.ishiusuCookTime = 0;
                 }
             }
         }
@@ -243,17 +252,20 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
     /**
      * Do not make give this method the name canInteractWith because it clashes with Container
      */
+    @Override
     public boolean isUseableByPlayer(EntityPlayer entityplayer) {
         return this.worldObj.getTileEntity(this.xCoord, this.yCoord, this.zCoord) != this ? false : entityplayer.getDistanceSq((double)this.xCoord + 0.5D, (double)this.yCoord + 0.5D, (double)this.zCoord + 0.5D) <= 64.0D;
     }
 
+    @Override
     public void openInventory() {}
-
+    @Override
     public void closeInventory() {}
 
     /**
      * Returns true if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
      */
+    @Override
     public boolean isItemValidForSlot(int slot, ItemStack itemstack) {
         return slot == 1 ? false : true;
     }
@@ -262,6 +274,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
      * Returns an array containing the indices of the slots that can be accessed by automation on the given side of this
      * block.
      */
+    @Override
     public int[] getAccessibleSlotsFromSide(int var1) {
         return var1 == 0 ? slotsBottom : (var1 == 1 ? slotsTop : slotsSides);
     }
@@ -270,6 +283,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
      * Returns true if automation can insert the given item in the given slot from the given side. Args: Slot, item,
      * side
      */
+    @Override
     public boolean canInsertItem(int i, ItemStack itemstack, int var3) {
         return this.isItemValidForSlot(i, itemstack);
     }
@@ -278,6 +292,7 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
      * Returns true if automation can extract the given item in the given slot from the given side. Args: Slot, item,
      * side
      */
+    @Override
     public boolean canExtractItem(int i, ItemStack itemstack, int j) {
         return j != 0 || i != 1;
     }

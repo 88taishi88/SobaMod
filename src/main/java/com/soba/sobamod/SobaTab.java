@@ -1,5 +1,7 @@
 package com.soba.sobamod;
 
+import com.soba.sobamod.init.RegisterItem;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -11,7 +13,7 @@ public class SobaTab extends CreativeTabs {
 
 	@Override
 	public Item getTabIconItem() {
-		return SobaMod.soba;
+		return RegisterItem.soba;
 	}
 
 }

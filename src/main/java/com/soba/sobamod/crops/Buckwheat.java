@@ -2,7 +2,7 @@ package com.soba.sobamod.crops;
 
 import java.util.Random;
 
-import com.soba.sobamod.SobaMod;
+import com.soba.sobamod.init.RegisterItem;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -83,11 +83,11 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
     }
 
 	protected Item func_149866_i() {
-		return SobaMod.sobanomi;
+		return RegisterItem.sobanomi;
 	}
 
 	protected Item func_149865_P() {
-		return SobaMod.sobanomi;
+		return RegisterItem.sobanomi;
 	}
 
 }
