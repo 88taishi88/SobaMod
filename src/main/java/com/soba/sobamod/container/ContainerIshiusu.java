@@ -36,11 +36,13 @@ public class ContainerIshiusu extends Container {
     	}
     }
 
+    @Override
     public void addCraftingToCrafters(ICrafting icrafting) {
     	super.addCraftingToCrafters(icrafting);
     	icrafting.sendProgressBarUpdate(this, 0, this.ishiusu.ishiusuCookTime);
     }
 
+    @Override
     public void detectAndSendChanges() {
     	super.detectAndSendChanges();
     	for(int i = 0; i < this.crafters.size(); ++i) {
@@ -54,8 +56,9 @@ public class ContainerIshiusu extends Container {
     	this.lastCookTime = this.ishiusu.ishiusuCookTime;
     }
 
+    @Override
     @SideOnly(Side.CLIENT)
-    public void updatePogressBar(int slot, int newValue) {
+    public void updateProgressBar(int slot, int newValue) {
 
     	if(slot == 0) {
     		this.ishiusu.ishiusuCookTime = newValue;
