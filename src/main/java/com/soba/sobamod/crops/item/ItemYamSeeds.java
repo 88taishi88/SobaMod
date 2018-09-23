@@ -13,23 +13,25 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class ItemYamSeeds extends ItemSeeds implements IPlantable{
+public class ItemYamSeeds extends ItemSeeds implements IPlantable {
 
 	public ItemYamSeeds() {
 		super(RegisterBlock.Yam, Blocks.farmland);
+		// this.soilBlockID = Block.farmland;
+		// this.setCreativeTab(RegisterOther.tabNoodle);
 	}
 
-	/** ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä½¿ç”¨ã—ãŸã¨ãã®å‡¦ç†ã€‚ */
+	/** ƒAƒCƒeƒ€‚ğg—p‚µ‚½‚Ìˆ—B */
 	@Override
 	public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {
 		if (side != 1) {
 			return false;
 		} else if (player.canPlayerEdit(x, y, z, side, itemStack) && player.canPlayerEdit(x, y + 1, z, side, itemStack)) {
-			// ä¸Šã‹ã‚‰ã®ä½¿ç”¨ã§ã€ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒç·¨é›†å¯èƒ½ã§ã€å³ã‚¯ãƒªãƒƒã‚¯ã—ãŸãƒ–ãƒ­ãƒƒã‚¯ãŒè€•åœ°ã§ã‚ã‚Šã€ãã®ä¸ŠãŒç©ºæ°—ã®æ™‚ã€‚
+			// ã‚©‚ç‚Ìg—p‚ÅAƒvƒŒƒCƒ„[‚ª•ÒW‰Â”\‚ÅA‰EƒNƒŠƒbƒN‚µ‚½ƒuƒƒbƒN‚ªk’n‚Å‚ ‚èA‚»‚Ìã‚ª‹ó‹C‚ÌB
 			if (world.getBlock(x, y, z).canSustainPlant(world, x, y, z, ForgeDirection.UP, this) && world.isAirBlock(x, y + 1, z)) {
-				// ä½œç‰©ã‚’è¨­ç½®ã™ã‚‹
+				// ì•¨‚ğİ’u‚·‚éB
 				world.setBlock(x, y + 1, z, RegisterBlock.Yam);
-				// ã‚¹ã‚¿ãƒƒã‚¯æ•°ã‚’æ¸›ã‚‰ã™
+				// ƒXƒ^ƒbƒN”‚ğŒ¸‚ç‚·B
 				--itemStack.stackSize;
 				return true;
 			} else {
@@ -40,24 +42,24 @@ public class ItemYamSeeds extends ItemSeeds implements IPlantable{
 		}
 	}
 
-	/** ä½œç‰©ã®ç¨®åˆ¥ã‚’è¿”ã™ã€‚ */
+	/** ì•¨‚Ìí•Ê‚ğ•Ô‚·B*/
 	@Override
 	public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
-		// IPlantableã®å®Ÿè£…ã€‚ä½œç‰©ã€‚è€•åœ°ã®ä¸Šã«è¨­ç½®ã™ã‚‹ã€‚
+		// IPlantable‚ÌÀ‘•Bì•¨Bk’n‚Ìã‚Éİ’u‚·‚éB
 		return EnumPlantType.Crop;
 	}
 
-	/** ä½œç‰©ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¿”ã™ã€‚ */
+	/** ì•¨ƒuƒƒbƒN‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·B */
 	@Override
 	public Block getPlant(IBlockAccess world, int x, int y, int z) {
-		// IPlantableã®å®Ÿè£…
+		// IPlantable‚ÌÀ‘•B
 		return RegisterBlock.Yam;
 	}
 
-	/** ä½œç‰©ã®ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿ã‚’è¿”ã™ã€‚ */
+	/** ì•¨‚Ìƒƒ^ƒf[ƒ^‚ğ•Ô‚·B */
 	@Override
 	public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
-		// IPlantableã®å®Ÿè£…
+		// IPlantable‚ÌÀ‘•B
 		return 0;
 	}
 }

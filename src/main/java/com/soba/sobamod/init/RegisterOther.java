@@ -25,7 +25,7 @@ import net.minecraftforge.oredict.OreDictionary;
 
 public class RegisterOther {
 
-	//å®Ÿç¸¾ã®å®šç¾©
+	//ÀÑ‚Ì’è‹`
 	public static Achievement getBuckwheat;
 	public static Achievement getSoba;
 	public static Achievement getYakisoba;
@@ -40,21 +40,21 @@ public class RegisterOther {
 	public static Achievement craft200Wanko;
 	public static Achievement craft500Wanko;
 	public static Achievement getTableware;
-	//å®Ÿç¸¾ãƒšãƒ¼ã‚¸ã®å®šç¾©
+	//ÀÑƒy[ƒW‚Ì’è‹`
 	public static AchievementPage SobaPage;
-	//ã‚¯ãƒªã‚¨ã‚¤ãƒ†ã‚£ãƒ–ã‚¿ãƒ–ã®å®šç¾©
+	//ƒNƒŠƒGƒCƒeƒBƒuƒ^ƒu‚Ì’è‹`
 	public static CreativeTabs tabNoodles = new SobaTab("SobaMod");
 	//GuiIDã®å®šç¾©
 	public static final int guiIDIshiusu = 0;
 
-	/**å®Ÿç¸¾ã€é‰±çŸ³è¾æ›¸ãªã©ã‚’ç™»éŒ²ã™ã‚‹ãƒ¡ã‚¾ãƒƒãƒˆ*/
+	/**‚»‚Ì‘¼‚Ì“o˜^*/
 	@EventHandler
 	public static void register() {
 
-		//TileEntityã®ç™»éŒ²
+		//TileEntity‚Ì“o˜^
 		GameRegistry.registerTileEntity(TileEntityIshiusu.class, "Ishiusu");
 
-		//ContainerItemã®ç™»éŒ²
+		//ContainerItem‚Ì“o˜^
 		RegisterItem.konebati.setContainerItem(RegisterItem.konebati);
 		RegisterItem.nosiita.setContainerItem(RegisterItem.nosiita);
 		RegisterItem.mennbo.setContainerItem(RegisterItem.mennbo);
@@ -71,17 +71,17 @@ public class RegisterOther {
 		RegisterItem.driedHerring.setContainerItem(RegisterItem.herringRoe);
 		RegisterItem.boilMizuYude.setContainerItem(RegisterItem.sobaYudenabe);
 
-		//é­šé‡£ã‚Šã®ç™»éŒ²
+		//’Ş‚è‚Ì“o˜^
 		FishingHooks.addFish(new WeightedRandomFishable(new ItemStack(RegisterItem.shrimp, 1), 55));
 		FishingHooks.addFish(new WeightedRandomFishable(new ItemStack(RegisterItem.herring, 20), 100));
 
-		//ç¨®ã®ç™»éŒ²
+		//A•¨‚Ì“o˜^
 		MinecraftForge.addGrassSeed(new ItemStack(RegisterItem.sobanomi), 3);
 		MinecraftForge.addGrassSeed(new ItemStack(RegisterItem.greenOnion), 1);
 		MinecraftForge.addGrassSeed(new ItemStack(RegisterItem.yam), 1);
 		MinecraftForge.addGrassSeed(new ItemStack(RegisterItem.wasabi), 1);
 
-		//é‰±çŸ³è¾æ›¸ã®ç™»éŒ²
+		//zÎ«‘‚Ö‚Ì“o˜^
 		OreDictionary.registerOre("cropBuckwheat", RegisterItem.sobanomi);
 		OreDictionary.registerOre("cropGreenOnion", RegisterItem.greenOnion);
 		OreDictionary.registerOre("cropYam", RegisterItem.yam);
@@ -89,10 +89,10 @@ public class RegisterOther {
 		OreDictionary.registerOre("cropSoy", RegisterItem.soyBean);
 		OreDictionary.registerOre("dustFlour", RegisterItem.flour);
 
-		//GuiHandlerã®ç™»éŒ²
+		//GuiHandler‚Ì“o˜^
 		NetworkRegistry.INSTANCE.registerGuiHandler(SobaModCore.instance, new GuiHandler());
 
-		//å®Ÿç¸¾ã®ç™»éŒ²
+		//ÀÑ‚Ì“o˜^
 		getBuckwheat = new Achievement("achievement.getBuckwheat", "getBuckwheat", 0, 0,
 				new ItemStack(RegisterItem.sobanomi),
 				(Achievement) null)

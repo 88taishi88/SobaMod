@@ -25,8 +25,8 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class RegisterItem {
 
-	//ã‚¢ã‚¤ãƒ†ãƒ ã®å®šç¾©
-	//é“å…·
+	//ƒAƒCƒeƒ€‚Ì’è‹`
+	//“¹‹ï
 	public static Item konebati;
 	public static Item nosiita;
 	public static Item mennbo;
@@ -46,7 +46,7 @@ public class RegisterItem {
 	public static Item yuto;
 	public static Item sobaYudenabe;
 	public static Item sobayuYuto;
-	//çš¿
+	//M
 	public static Item seiroWaku;
 	public static Item seiroSudare;
 	public static Item seiro;
@@ -54,7 +54,7 @@ public class RegisterItem {
 	public static Item plate;
 	public static Item clayOwan;
 	public static Item owan;
-	//ææ–™
+	//‘fŞ
 	public static Item sobanomi;
 	public static Item sobako;
 	public static Item flour;
@@ -78,7 +78,7 @@ public class RegisterItem {
 
 	public static Item remainingTuyu;
 	public static Item sobayuTuyu;
-	//æµ·è€ã«é–¢é€£ã™ã‚‹ã‚‚ã®
+	//ŠC˜VŠÖ˜A
 	public static Item shrimp;
 	public static Item koromo;
 	public static Item pot;
@@ -88,7 +88,7 @@ public class RegisterItem {
 	public static Item koromoShrimp;
 	public static Item tenpura;
 	public static Item ebitensoba;
-	//ä½œç‰©
+	//A•¨
 	public static Item greenOnion;
 	public static Item chopGreOni;
 	public static Item yam;
@@ -96,7 +96,7 @@ public class RegisterItem {
 	public static Item wasabi;
 	public static Item gratedWasabi;
 	public static Item tororoSoba;
-	//ã©ã‚“ã¶ã‚Šã‚‚ã®
+	//“¤•…ŠÖ˜A
 	public static Item tenkasu;
 	public static Item tanukiSoba;
 	public static Item salt;
@@ -110,11 +110,11 @@ public class RegisterItem {
 	public static Item chopTofu;
 	public static Item friedTofu;
 	public static Item kitsuneSoba;
-	//ã‚ã‚“ã“
+	//‚í‚ñ‚±‚»‚Î
 	public static Item wankoSobaOwan;
 	public static Item wankoOwanTuyu;
 	public static Item wankoSoba;
-	//ã‹ãæšã’ãªã©
+	//‚©‚«‚ ‚°
 	public static Item carrotStick;
 	public static Item potatoStick;
 	public static Item kakiageSeed;
@@ -122,11 +122,11 @@ public class RegisterItem {
 	public static Item kakiageSoba;
 	public static Item mushroomTen;
 	public static Item kinoTenSoba;
-	//ãŠè“å­
+	//‚»‚Î‚Ì‚¨‰Ùq
 	public static Item karintoDough;
 	public static Item sobaKarinto;
 	public static Item sobaCookie;
-	//ã«ã—ã‚“
+	//‚É‚µ‚ñ
 	public static Item blower;
 	public static Item herring;
 	public static Item driedHerring;
@@ -141,7 +141,7 @@ public class RegisterItem {
 	public static Item NishinKanroni;
 	public static Item NishinSoba;
 
-	/**ã‚¢ã‚¤ãƒ†ãƒ ã‚’ç™»éŒ²ã™ã‚‹ãƒ¡ã‚¾ãƒƒãƒˆ*/
+	/**ƒAƒCƒeƒ€‚Ì“o˜^*/
 	public static void register() {
 
 		konebati = new Item()

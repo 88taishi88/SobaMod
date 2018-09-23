@@ -32,6 +32,8 @@ public class Ishiusu extends BlockContainer {
 		super(Material.rock);
 		this.setHardness(5.0F);
 		this.setResistance(0.5F);
+		float f = 0.5F;
+		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.75F, 0.5F + f);
 	}
 
 	public int getRenderType() {

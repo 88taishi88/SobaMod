@@ -27,7 +27,7 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 	private IIcon[] iIcons;
 
 	public Buckwheat() {
-		// BlockBushのコンストラクタでMaterialはMaterial.plantsを指定されている。
+		// BlockBushのコンストラクタでMaterialはMaterial.plantsに指定されている。
 		super();
 		// updateTickがランダムに呼ばれるようにする
 		this.setTickRandomly(true);
@@ -55,14 +55,14 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 	/** そのブロックの上に設置できるか。 */
 	@Override
 	protected boolean canPlaceBlockOn(Block block) {
-		// 耕地の上のみ
+		// 耕地の上のみ。
 		return block == Blocks.farmland;
 	}
 
-	/** 隣接ブロックが更新されたときの処理。 */
+	/** 隣接ブロックが更新された時の処理。 */
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-		// 二重判定回避のためコメントアウト。実際、Blockクラスでは何もしていない。
+		//二重判定回避のためコメントアウト。実際、Blockクラスでは何もしていない。
 		//		super.onNeighborBlockChange(world, x, y, z, block);
 		this.checkAndDropBlock(world, x, y, z);
 	}
@@ -74,10 +74,11 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 		this.checkAndDropBlock(world, x, y, z);
 		// 一つ上のブロックの光源レベルが9以上の時。
 		if (world.getBlockLightValue(x, y + 1, z) >= 9) {
-			// メタデータの取得
+			// メタデータを取得。
 			int l = world.getBlockMetadata(x, y, z);
-			// 成長段階に達していないとき。
+			// 成長限界に達していない時。
 			if (l < 7) {
+				// 成長しやすさを取得。
 				float f = this.func_149864_n(world, x, y, z);
 				// 成長させるか判定する。
 				if (random.nextInt((int)(25.0F / f) + 1) == 0) {
@@ -92,7 +93,7 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 	/** 設置状態を維持できるかを確認し、維持できなければドロップする。 */
 	@Override
 	protected void checkAndDropBlock(World world, int x, int y, int z) {
-		// 維持できないとき。
+		// 維持できない時。
 		if (!this.canBlockStay(world, x, y, z)) {
 			// ドロップする。
 			this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
@@ -101,14 +102,14 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 		}
 	}
 
-	/** その座標を維持できるか。 */
+	/** その座標で維持できるか。 */
 	@Override
 	public boolean canBlockStay(World world, int x, int y, int z) {
 		// 下のブロックが耕地かどうかを判定する。
 		return world.getBlock(x, y - 1, z).canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this);
 	}
 
-	/** 作物の種別を返す。 */
+	/** 作物の種別を返す。*/
 	@Override
 	public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
 		// IPlantableの実装。作物。耕地の上に設置する。
@@ -129,7 +130,7 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 		return world.getBlockMetadata(x, y, z);
 	}
 
-	/** 成長しやすさの数値を返す */
+	/** 成長しやすさの数値を返す。 */
 	private float func_149864_n(World world, int x, int y, int z) {
 		// 周囲の耕地、作物の状況を判定し、成長しやすさを算出する。
 		float f = 1.0F;
@@ -167,46 +168,46 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 		return f;
 	}
 
-	/** 当たり判定を返す */
+	/** あたり判定を返す。 */
 	@Override
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
-		// 当たり判定をなくす
+		// あたり判定をなくす。
 		return null;
 	}
 
-	/** 不透明なブロックか */
+	/** 不透明なブロックか。 */
 	@Override
 	public boolean isOpaqueCube() {
 		// 透明なブロックなのでfalseを返す。
 		return false;
 	}
 
-	/** 通常と同様に描画するか */
+	/** 通常と同様に描画するか。 */
 	@Override
 	public boolean renderAsNormalBlock() {
 		return false;
 	}
 
-	/** 描写の種別を返す */
+	/** 描画の種別を返す。 */
 	@Override
 	public int getRenderType() {
-		// 小麦と同じ。四枚の板が上から見て「井」の形になるように配置され、そこにテクスチャが表示される。
+		// 小麦などと同じ。四枚の板が上から見て「井」の形になるように配置され、そこにテクスチャが表示される。
 		return 6;
 	}
 
-	/** 種のアイテムを返す */
+	/** 種のアイテムを返す。 */
 	@Override
 	protected Item func_149866_i() {
 		return RegisterItem.sobanomi;
 	}
 
-	/** 作物のアイテムを返す */
+	/** 作物のアイテムを返す。 */
 	@Override
 	protected Item func_149865_P() {
 		return RegisterItem.sobanomi;
 	}
 
-	/** ブロックをドロップさせる */
+	/** ブロックをドロップさせる。 */
 	@Override
 	public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float dropChance, int fortune) {
 		super.dropBlockAsItemWithChance(world, x, y, z, meta, dropChance, fortune);
@@ -230,8 +231,8 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 	/** ドロップアイテムのリストを返す。 */
 	@Override
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
-		// 未成長なら種を、完全成長していたなら作物が追加される。
-		ArrayList<ItemStack> ret = new ArrayList<>();
+		// 未成長なら種を、完全成長していたら作物が追加される。
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 		int count = quantityDropped(metadata,fortune, world.rand);
 		for (int i = 0; i < count; i++) {
 			Item item = getItemDropped(metadata, world.rand, fortune);
@@ -239,14 +240,14 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 				ret.add(new ItemStack(item, 1, damageDropped(metadata)));
 			}
 		}
-		// 以上はBlockでの実装。以下はBlockCropsでの実装。重複処理回避のため変更した。
+		// 以上はBlockでの実装。以下はBlockCrops出の実装。重複処理回避のため変更した。
 		//		ArrayList<ItemStack> ret = super.getDrops(world, x, y, z, metadata, fortune);
 		//
-		// 完全成長の時
+		// 完全成長の時。
 		if (metadata >= 7) {
-			// 幸運レベルにより判定回数が増加する。デフォルトは三回。
+			// 幸運レベルにより判定回数が増加する。デフォルトは3回。
 			for (int i = 0; i < 3 + fortune; ++i) {
-				// 0~14 <= 7　より、1/2の確率
+				// 0~14 <= 7　より、1/2の確率。
 				if (world.rand.nextInt(15) <= metadata) {
 					// 種を追加する。
 					ret.add(new ItemStack(this.func_149866_i(), 1, 0));
@@ -256,7 +257,7 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 		return ret;
 	}
 
-	/** 対応するアイテムを返す */
+	/** 対応するアイテムを返す。 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Item getItem(World world, int x, int y, int z) {
@@ -275,7 +276,7 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 		return this.iIcons[meta];
 	}
 
-	/** ブロックのテクスチャを登録する */
+	/** ブロックのテクスチャを登録する。 */
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void registerBlockIcons(IIconRegister register) {
@@ -285,28 +286,28 @@ public class Buckwheat extends BlockCrops implements IPlantable, IGrowable {
 		}
 	}
 
-	/** 骨粉を使用できるか */
+	/** 骨粉を使用できるか。 */
 	@Override
 	public boolean func_149851_a(World world, int x, int y, int z, boolean isRemote) {
-		// IGrowableの実装。完全成長していたらfalse
+		// IGrowableの実装。完全成長していたらfalse。
 		return world.getBlockMetadata(x, y, z) != 7;
 	}
 
 	/** 骨粉を適用するか */
 	@Override
 	public boolean func_149852_a(World world, Random random, int x, int y, int z) {
-		// IGrowableの実装
+		// IGrowableの実装。
 		return true;
 	}
 
-	/** 骨粉を適用する */
+	/** 骨粉を適用する。 */
 	@Override
 	public void func_149853_b(World world, Random random, int x, int y, int z) {
-		// IGrowableの実装
+		// IGrowableの実装。
 		this.func_149863_m(world, x, y, z);
 	}
 
-	/** 骨粉を使用したときの成長させる処理 */
+	/** 骨粉を使用した時の成長させる処理。 */
 	@Override
 	public void func_149863_m(World world, int x, int y, int z) {
 		// 成長段階を2以上5以下上昇させる。

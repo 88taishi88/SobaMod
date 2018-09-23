@@ -1,5 +1,6 @@
 package com.soba.sobamod.crops.block;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.soba.sobamod.init.RegisterItem;
@@ -10,8 +11,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.IGrowable;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
@@ -19,75 +24,302 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class Wasabi extends BlockCrops implements IPlantable, IGrowable {
+	private IIcon[] iIcons;
 
-	@SideOnly(Side.CLIENT)
-	private IIcon[] iconArray;
-
-	@SideOnly(Side.CLIENT)
-	public void registerBlockIcons(IIconRegister iconRegister) {
-		this.iconArray = new IIcon[4];
-
-		for (int i = 0; i < this.iconArray.length; i++) {
-			this.iconArray[i] = iconRegister.registerIcon("noodlesmod:wasabi_" + (i + 1));
-		}
+	public Wasabi() {
+		// BlockBush‚ÌƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÅMaterial‚ÍMaterial.plants‚Éw’è‚³‚ê‚Ä‚¢‚éB
+		super();
+		// updateTick‚ªƒ‰ƒ“ƒ_ƒ€‚ÉŒÄ‚Î‚ê‚é‚æ‚¤‚É‚·‚é
+		this.setTickRandomly(true);
+		// ƒuƒƒbƒN‚Ì‘å‚«‚³‚ğw’è‚·‚éB“–‚½‚è”»’è‚âƒJ[ƒ\ƒ‹‚ª‚ ‚Á‚½‚Æ‚«‚Ì˜g‚Ì‘å‚«‚³‚Ég‚í‚ê‚éB
+		float f = 0.5F;
+		this.setBlockBounds(0.5F - f, 0.0F, 0.5F - f, 0.5F + f, 0.25F, 0.5F + f);
+		// ƒNƒŠƒGƒCƒeƒBƒuƒ^ƒu‚É•\¦‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚éB
+		this.setCreativeTab(null);
+		// ˆêu‚Å”j‰ó‚Å‚«‚é‚æ‚¤‚É‚·‚éBƒc[ƒ‹‚ğ‚Á‚Ä‚¢‚Ä‚à‘Ï‹v’l‚ÍÁ”ï‚µ‚È‚¢B
+		this.setHardness(0.0F);
+		// İ’u‚â•às‚Ì‰¹‚Ìí—Ş‚ğw’è‚·‚éB
+		this.setStepSound(soundTypeGrass);
+		// “Œv‚ÉƒJƒEƒ“ƒg‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚éBiHj
+		this.disableStats();
 	}
 
-	/** éš£æ¥ãƒ–ãƒ­ãƒƒã‚¯ãŒæ›´æ–°ã•ã‚ŒãŸæ™‚ã®å‡¦ç†ã€‚ */
+	/** ‚»‚ÌÀ•W‚Éİ’u‚Å‚«‚é‚©B */
+	@Override
+	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
+		return world.getBlock(x, y, z).isReplaceable(world, x, y, z) && this.canBlockStay(world, x, y, z);
+		// ˆÈ‰º‚ÍBlockBush‚Å‚ÌÀ‘•Bsuper‚ğŒÄ‚Ño‚·‚Æ“ñd‚É”»’è‚³‚ê‚Ä‚µ‚Ü‚¤‚½‚ß•ÏX‚µ‚½B
+		// return super.canplaceBlockAt(world, x, y, z) && this.canBlockStay(world, x, y, z);
+	}
+
+	/** ‚»‚ÌƒuƒƒbƒN‚Ìã‚Éİ’u‚Å‚«‚é‚©B */
+	@Override
+	protected boolean canPlaceBlockOn(Block block) {
+		// k’n‚Ìã‚Ì‚İB
+		return block == Blocks.farmland;
+	}
+
+	/** —×ÚƒuƒƒbƒN‚ªXV‚³‚ê‚½‚Ìˆ—B */
 	@Override
 	public void onNeighborBlockChange(World world, int x, int y, int z, Block block) {
-		// äºŒé‡åˆ¤å®šå›é¿ã®ãŸã‚ã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆã€‚å®Ÿéš›ã€Blockã‚¯ãƒ©ã‚¹ã§ã¯ä½•ã‚‚ã—ã¦ã„ãªã„ã€‚
+		//“ñd”»’è‰ñ”ğ‚Ì‚½‚ßƒRƒƒ“ƒgƒAƒEƒgBÀÛABlockƒNƒ‰ƒX‚Å‚Í‰½‚à‚µ‚Ä‚¢‚È‚¢B
 		//		super.onNeighborBlockChange(world, x, y, z, block);
 		this.checkAndDropBlock(world, x, y, z);
 	}
 
-	/** è¨­ç½®çŠ¶æ…‹ã‚’ç¶­æŒã§ãã‚‹ã‹ã‚’ç¢ºèªã—ã€ç¶­æŒã§ããªã‘ã‚Œã°ãƒ‰ãƒ­ãƒƒãƒ—ã™ã‚‹ã€‚ */
+	/** TickXV‚Ìˆ—B */
 	@Override
-	protected void checkAndDropBlock(World world, int x, int y, int z) {
-		// ç¶­æŒã§ããªã„æ™‚ã€‚
-		if (!this.canBlockStay(world, x, y, z)) {
-			// ãƒ‰ãƒ­ãƒƒãƒ—ã™ã‚‹ã€‚
-			this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
-			// ç©ºæ°—ã«ä¸Šæ›¸ãã™ã‚‹ã€‚
-			world.setBlock(x, y, z, getBlockById(0), 0, 2);
+	public void updateTick(World world, int x, int y, int z, Random random) {
+		// ƒ‰ƒ“ƒ_ƒ€‚ÉŒÄ‚Î‚ê‚éB
+		this.checkAndDropBlock(world, x, y, z);
+		// ˆê‚Âã‚ÌƒuƒƒbƒN‚ÌŒõŒ¹ƒŒƒxƒ‹‚ª9ˆÈã‚ÌB
+		if (world.getBlockLightValue(x, y + 1, z) >= 9) {
+			// ƒƒ^ƒf[ƒ^‚ğæ“¾B
+			int l = world.getBlockMetadata(x, y, z);
+			// ¬’·ŒÀŠE‚É’B‚µ‚Ä‚¢‚È‚¢B
+			if (l < 7) {
+				// ¬’·‚µ‚â‚·‚³‚ğæ“¾B
+				float f = this.func_149864_n(world, x, y, z);
+				// ¬’·‚³‚¹‚é‚©”»’è‚·‚éB
+				if (random.nextInt((int)(25.0F / f) + 1) == 0) {
+					// ˆê’iŠK¬’·‚³‚¹‚éB
+					++l;
+					world.setBlockMetadataWithNotify(x, y, z, l, 2);
+				}
+			}
 		}
 	}
 
-	/** ãã®åº§æ¨™ã§ç¶­æŒã§ãã‚‹ã‹ã€‚ */
+	/** İ’uó‘Ô‚ğˆÛ‚Å‚«‚é‚©‚ğŠm”F‚µAˆÛ‚Å‚«‚È‚¯‚ê‚Îƒhƒƒbƒv‚·‚éB */
+	@Override
+	protected void checkAndDropBlock(World world, int x, int y, int z) {
+		// ˆÛ‚Å‚«‚È‚¢B
+		if (!this.canBlockStay(world, x, y, z)) {
+			// ƒhƒƒbƒv‚·‚éB
+			this.dropBlockAsItem(world, x, y, z, world.getBlockMetadata(x, y, z), 0);
+			// ‹ó‹C‚Éã‘‚«‚·‚éB
+			world.setBlock(x, y, z, getBlockById(0), 0 ,2);
+		}
+	}
+
+	/** ‚»‚ÌÀ•W‚ÅˆÛ‚Å‚«‚é‚©B */
 	@Override
 	public boolean canBlockStay(World world, int x, int y, int z) {
-		// ä¸‹ã®ãƒ–ãƒ­ãƒƒã‚¯ãŒè€•åœ°ã‹ã©ã†ã‹ã‚’åˆ¤å®šã™ã‚‹ã€‚
+		// ‰º‚ÌƒuƒƒbƒN‚ªk’n‚©‚Ç‚¤‚©‚ğ”»’è‚·‚éB
 		return world.getBlock(x, y - 1, z).canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, this);
 	}
 
-	/** ä½œç‰©ã®ç¨®åˆ¥ã‚’è¿”ã™ã€‚ */
+	/** ì•¨‚Ìí•Ê‚ğ•Ô‚·B*/
 	@Override
 	public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
-		// IPlantableã®å®Ÿè£…ã€‚ä½œç‰©ã€‚è€•åœ°ã®ä¸Šã«è¨­ç½®ã™ã‚‹ã€‚
+		// IPlantable‚ÌÀ‘•Bì•¨Bk’n‚Ìã‚Éİ’u‚·‚éB
 		return EnumPlantType.Crop;
 	}
 
-	public IIcon getIcon(int side, int metadata) {
-		if (metadata < 7){
-			if (metadata == 6) {
-				metadata = 5;
-			}
-
-			return this.iconArray[metadata >> 1];
-		}
-
-		return this.iconArray[3];
+	/** ì•¨ƒuƒƒbƒN‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ•Ô‚·B */
+	@Override
+	public Block getPlant(IBlockAccess world, int x, int y, int z) {
+		// IPlantable‚ÌÀ‘•B
+		return this;
 	}
 
-	public int quantityDropped(int metadata, int fortune, Random random) {
-        return metadata == 6 ? random.nextInt() + 1 : 1; // å®Œå…¨æˆé•·ãªã‚‰ãƒ©ãƒ³ãƒ€ãƒ ã€ãã‚Œä»¥å¤–ãªã‚‰1ã¤
-    }
+	/** ì•¨‚Ìƒƒ^ƒf[ƒ^‚ğ•Ô‚·B */
+	@Override
+	public int getPlantMetadata(IBlockAccess world, int x, int y, int z) {
+		// IPlantable‚ÌÀ‘•B
+		return world.getBlockMetadata(x, y, z);
+	}
 
+	/** ¬’·‚µ‚â‚·‚³‚Ì”’l‚ğ•Ô‚·B */
+	private float func_149864_n(World world, int x, int y, int z) {
+		// üˆÍ‚Ìk’nAì•¨‚Ìó‹µ‚ğ”»’è‚µA¬’·‚µ‚â‚·‚³‚ğZo‚·‚éB
+		float f = 1.0F;
+		Block block = world.getBlock(x, y, z - 1);
+		Block block1 = world.getBlock(x, y, z + 1);
+		Block block2 = world.getBlock(x - 1, y, z);
+		Block block3 = world.getBlock(x + 1, y, z);
+		Block block4 = world.getBlock(x - 1, y, z - 1);
+		Block block5 = world.getBlock(x + 1, y, z - 1);
+		Block block6 = world.getBlock(x + 1, y, z + 1);
+		Block block7 = world.getBlock(x - 1, y, z + 1);
+
+		boolean flag = block2 == this || block3 == this;
+		boolean flag1 = block == this || block1 == this;
+		boolean flag2 = block4 == this || block5 == this || block6 == this || block7 == this;
+
+		for (int l = x - 1; l <= x + 1; ++l) {
+			for (int i1 = z - 1; i1 <= z + 1; ++i1) {
+				float f1 = 0.0F;
+				if (world.getBlock(l, y - 1, i1).canSustainPlant(world, l, y - 1, i1, ForgeDirection.UP, this)) {
+					f1 = 1.0F;
+					if (world.getBlock(l, y - 1, i1).isFertile(world, l, y - 1, i1)) {
+						f1 = 3.0F;
+					}
+				}
+				if (l != x || i1 != z) {
+					f1 /= 4.0F;
+				}
+				f += f1;
+			}
+		}
+		if (flag2 || flag && flag1) {
+			f /= 2.0F;
+		}
+		return f;
+	}
+
+	/** ‚ ‚½‚è”»’è‚ğ•Ô‚·B */
+	@Override
+	public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z) {
+		// ‚ ‚½‚è”»’è‚ğ‚È‚­‚·B
+		return null;
+	}
+
+	/** •s“§–¾‚ÈƒuƒƒbƒN‚©B */
+	@Override
+	public boolean isOpaqueCube() {
+		// “§–¾‚ÈƒuƒƒbƒN‚È‚Ì‚Åfalse‚ğ•Ô‚·B
+		return false;
+	}
+
+	/** ’Êí‚Æ“¯—l‚É•`‰æ‚·‚é‚©B */
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+
+	/** •`‰æ‚Ìí•Ê‚ğ•Ô‚·B */
+	@Override
+	public int getRenderType() {
+		// ¬”‚È‚Ç‚Æ“¯‚¶Bl–‡‚Ì”Â‚ªã‚©‚çŒ©‚Äuˆäv‚ÌŒ`‚É‚È‚é‚æ‚¤‚É”z’u‚³‚êA‚»‚±‚ÉƒeƒNƒXƒ`ƒƒ‚ª•\¦‚³‚ê‚éB
+		return 6;
+	}
+
+	/** í‚ÌƒAƒCƒeƒ€‚ğ•Ô‚·B */
+	@Override
 	protected Item func_149866_i() {
 		return RegisterItem.wasabi;
 	}
 
+	/** ì•¨‚ÌƒAƒCƒeƒ€‚ğ•Ô‚·B */
+	@Override
 	protected Item func_149865_P() {
 		return RegisterItem.wasabi;
 	}
+
+	/** ƒuƒƒbƒN‚ğƒhƒƒbƒv‚³‚¹‚éB */
+	@Override
+	public void dropBlockAsItemWithChance(World world, int x, int y, int z, int meta, float dropChance, int fortune) {
+		super.dropBlockAsItemWithChance(world, x, y, z, meta, dropChance, fortune);
+		// BlockCrop‚ÅˆÈ‰º‚Ì‚æ‚¤‚ÉƒI[ƒo[ƒ‰ƒCƒh‚³‚ê‚Ä‚¢‚éBK‰^ƒŒƒxƒ‹‚ğ0‚ÉŒÅ’èB
+		//		super.dropBlockAsItemWithChance(world, x, y, z, meta, dropChance, 0);
+	}
+
+	/** ƒhƒƒbƒvƒAƒCƒeƒ€‚ğ•Ô‚· */
+	@Override
+	public Item  getItemDropped(int meta, Random random, int fortune) {
+		// Šî–{“I‚Éí‚ğ•Ô‚·‚ªAŠ®‘S¬’·‚µ‚Ä‚¢‚½‚çì•¨‚ğ•Ô‚·B
+		return meta == 7 ? this.func_149865_P() : this.func_149866_i();
+	}
+
+	/** ƒhƒƒbƒv”‚ğ•Ô‚·B */
+	@Override
+	public int quantityDropped(Random random) {
+		return 1;
+	}
+
+	/** ƒhƒƒbƒvƒAƒCƒeƒ€‚ÌƒŠƒXƒg‚ğ•Ô‚·B */
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune) {
+		// –¢¬’·‚È‚çí‚ğAŠ®‘S¬’·‚µ‚Ä‚¢‚½‚çì•¨‚ª’Ç‰Á‚³‚ê‚éB
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		int count = quantityDropped(metadata,fortune, world.rand);
+		for (int i = 0; i < count; i++) {
+			Item item = getItemDropped(metadata, world.rand, fortune);
+			if (item != null) {
+				ret.add(new ItemStack(item, 1, damageDropped(metadata)));
+			}
+		}
+		// ˆÈã‚ÍBlock‚Å‚ÌÀ‘•BˆÈ‰º‚ÍBlockCropso‚ÌÀ‘•Bd•¡ˆ—‰ñ”ğ‚Ì‚½‚ß•ÏX‚µ‚½B
+		//		ArrayList<ItemStack> ret = super.getDrops(world, x, y, z, metadata, fortune);
+		//
+		// Š®‘S¬’·‚ÌB
+		if (metadata >= 7) {
+			// K‰^ƒŒƒxƒ‹‚É‚æ‚è”»’è‰ñ”‚ª‘‰Á‚·‚éBƒfƒtƒHƒ‹ƒg‚Í3‰ñB
+			for (int i = 0; i < 3 + fortune; ++i) {
+				// 0~14 <= 7@‚æ‚èA1/2‚ÌŠm—¦B
+				if (world.rand.nextInt(15) <= metadata) {
+					// í‚ğ’Ç‰Á‚·‚éB
+					ret.add(new ItemStack(this.func_149866_i(), 1, 0));
+				}
+			}
+		}
+		return ret;
+	}
+
+	/** ‘Î‰‚·‚éƒAƒCƒeƒ€‚ğ•Ô‚·B */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Item getItem(World world, int x, int y, int z) {
+		// í‚ğ•Ô‚·B
+		return this.func_149866_i();
+	}
+
+	/** ƒuƒƒbƒN‚ÌƒeƒNƒXƒ`ƒƒ‚ğ•Ô‚· */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public IIcon getIcon(int side, int meta) {
+		// ƒƒ^ƒf[ƒ^‚Ì”’l‚ªˆÙí‚¾‚Á‚½‚ç¬’·ŒÀŠE‚Ì’l‚ğg‚¤B
+		if (meta < 0 || meta > 7) {
+			meta = 7;
+		}
+		return this.iIcons[meta];
+	}
+
+	/** ƒuƒƒbƒN‚ÌƒeƒNƒXƒ`ƒƒ‚ğ“o˜^‚·‚éB */
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void registerBlockIcons(IIconRegister register) {
+		this.iIcons = new IIcon[8];
+		for (int i = 0; i < this.iIcons.length; ++i) {
+			this.iIcons[i] = register.registerIcon(this.getTextureName() + "_" + i);
+		}
+	}
+
+	/** œ•²‚ğg—p‚Å‚«‚é‚©B */
+	@Override
+	public boolean func_149851_a(World world, int x, int y, int z, boolean isRemote) {
+		// IGrowable‚ÌÀ‘•BŠ®‘S¬’·‚µ‚Ä‚¢‚½‚çfalseB
+		return world.getBlockMetadata(x, y, z) != 7;
+	}
+
+	/** œ•²‚ğ“K—p‚·‚é‚© */
+	@Override
+	public boolean func_149852_a(World world, Random random, int x, int y, int z) {
+		// IGrowable‚ÌÀ‘•B
+		return true;
+	}
+
+	/** œ•²‚ğ“K—p‚·‚éB */
+	@Override
+	public void func_149853_b(World world, Random random, int x, int y, int z) {
+		// IGrowable‚ÌÀ‘•B
+		this.func_149863_m(world, x, y, z);
+	}
+
+	/** œ•²‚ğg—p‚µ‚½‚Ì¬’·‚³‚¹‚éˆ—B */
+	@Override
+	public void func_149863_m(World world, int x, int y, int z) {
+		// ¬’·’iŠK‚ğ2ˆÈã5ˆÈ‰ºã¸‚³‚¹‚éB
+		int l = world.getBlockMetadata(x, y, z) + MathHelper.getRandomIntegerInRange(world.rand, 2, 5);
+		// ¬’·ŒÀŠE‚ğ’´‚¦‚Ä‚¢‚½‚ç—}‚¦‚éB
+		if (l > 7) {
+			l = 7;
+		}
+		// ƒƒ^ƒf[ƒ^‚ğİ’è‚·‚éB
+		world.setBlockMetadataWithNotify(x, y, z, l, 2);
+	}
+
+
 
 }

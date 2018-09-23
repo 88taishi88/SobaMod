@@ -24,7 +24,7 @@ public class RegisterBlock {
 	//ブロックツールの定義
 	public static Block blockIshiusu;
 
-	/**ブロックを登録するメゾット*/
+	/**登録メゾット*/
 	public static void register() {
 
 		//作物の登録
@@ -34,19 +34,23 @@ public class RegisterBlock {
 		GameRegistry.registerBlock(Buckwheat, "buckwheat");
 
 		GreenOnion = new GreenOnion()
-				.setBlockName("GreenOnion");
+				.setBlockName("GreenOnion")
+				.setBlockTextureName("noodlesmod:green_onion");
 		GameRegistry.registerBlock(GreenOnion, "GreenOnion");
 
 		Yam = new Yam()
-				.setBlockName("Yam");
+				.setBlockName("Yam")
+				.setBlockTextureName("noodlesmod:yam");
 		GameRegistry.registerBlock(Yam, "Yam");
 
 		Wasabi = new Wasabi()
-				.setBlockName("Wasabi");
+				.setBlockName("Wasabi")
+				.setBlockTextureName("noodlesmod:wasabi");
 		GameRegistry.registerBlock(Wasabi, "Wasabi");
 
 		Soy = new Soy()
-				.setBlockName("Soy");
+				.setBlockName("Soy")
+				.setBlockTextureName("noodlesmod:soy");
 		GameRegistry.registerBlock(Soy, "Soy");
 
 		//ブロックツールの登録

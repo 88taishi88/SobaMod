@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class RegisterRecipe {
 
-	/**レシピを登録するメゾット*/
+	/**���V�s�̓o�^*/
 	public static void register() {
 
 		GameRegistry.addRecipe(new ItemStack(RegisterBlock.blockIshiusu),

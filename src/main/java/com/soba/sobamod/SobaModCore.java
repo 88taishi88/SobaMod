@@ -20,7 +20,7 @@ public class SobaModCore {
 	@Metadata(MODID)
 	public static ModMetadata meta;
 
-	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹åŒ–
+	//ƒCƒ“ƒXƒ^ƒ“ƒX‚Ì“o˜^
 	@Instance(MODID)
 	public static SobaModCore instance;
 
@@ -28,14 +28,14 @@ public class SobaModCore {
 	public void init(FMLInitializationEvent event) {
 		ModInfo.loadInfo(meta);
 
-		//å„ãƒ¡ã‚¾ãƒƒãƒˆã®å‘¼ã³å‡ºã—
-		//ã‚¢ã‚¤ãƒ†ãƒ ç™»éŒ²ãƒ¡ã‚¾ãƒƒãƒˆ
+		//“o˜^ƒNƒ‰ƒX‚ÌŒÄ‚Ño‚µ
+		//ƒAƒCƒeƒ€“o˜^ƒNƒ‰ƒX
 		RegisterItem.register();
-		//ãƒ–ãƒ­ãƒƒã‚¯ç™»éŒ²ãƒ¡ã‚¾ãƒƒãƒˆ
+		//ƒuƒƒbƒN“o˜^ƒNƒ‰ƒX
 		RegisterBlock.register();
-		//ãã®ä»–ç™»éŒ²ãƒ¡ã‚¾ãƒƒãƒˆ
+		//‚»‚Ì‘¼“o˜^ƒNƒ‰ƒX
 		RegisterOther.register();
-		//ãƒ¬ã‚·ãƒ”ç™»éŒ²ãƒ¡ã‚¾ãƒƒãƒˆ
+		//ƒŒƒVƒs“o˜^ƒNƒ‰ƒX
 		RegisterRecipe.register();
 	}
 }
