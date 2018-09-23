@@ -17,4 +17,4 @@
 
 Minecraft Forge: MC1.7.10 Forge-1.7.10-10.13.4.1558
 
-蕎麦MOD:1.8.5 beta
+蕎麦MOD:1.8.5
