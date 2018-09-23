@@ -2,11 +2,11 @@ package com.soba.sobamod.init;
 
 import com.soba.sobamod.SobaModCore;
 import com.soba.sobamod.blocks.Ishiusu;
-import com.soba.sobamod.crops.Buckwheat;
-import com.soba.sobamod.crops.GreenOnion;
-import com.soba.sobamod.crops.Soy;
-import com.soba.sobamod.crops.Wasabi;
-import com.soba.sobamod.crops.Yam;
+import com.soba.sobamod.crops.block.Buckwheat;
+import com.soba.sobamod.crops.block.GreenOnion;
+import com.soba.sobamod.crops.block.Soy;
+import com.soba.sobamod.crops.block.Wasabi;
+import com.soba.sobamod.crops.block.Yam;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
@@ -29,7 +29,8 @@ public class RegisterBlock {
 
 		//作物の登録
 		Buckwheat = new Buckwheat()
-				.setBlockName("Buckwheast");
+				.setBlockName("Buckwheat")
+				.setBlockTextureName("noodlesmod:buckwheat");
 		GameRegistry.registerBlock(Buckwheat, "buckwheat");
 
 		GreenOnion = new GreenOnion()
@@ -49,9 +50,10 @@ public class RegisterBlock {
 		GameRegistry.registerBlock(Soy, "Soy");
 
 		//ブロックツールの登録
-		blockIshiusu = new Ishiusu(Material.rock)
+		blockIshiusu = new Ishiusu()
 				.setBlockName("Ishiusu")
-				.setCreativeTab(RegisterOther.tabNoodles);
+				.setCreativeTab(RegisterOther.tabNoodles)
+				.setBlockTextureName("noodlesmod:isiusu");
 		GameRegistry.registerBlock(blockIshiusu, "blockIshiusu");
 	}
 }

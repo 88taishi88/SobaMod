@@ -3,10 +3,16 @@ package com.soba.sobamod.init;
 import com.soba.sobamod.SobaModCore;
 import com.soba.sobamod.SobaTab;
 import com.soba.sobamod.handler.GuiHandler;
+import com.soba.sobamod.renderer.RenderIshiusu;
 import com.soba.sobamod.tileentity.TileEntityIshiusu;
 
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -42,6 +48,7 @@ public class RegisterOther {
 	public static final int guiIDIshiusu = 0;
 
 	/**実績、鉱石辞書などを登録するメゾット*/
+	@EventHandler
 	public static void register() {
 
 		//TileEntityの登録
@@ -135,5 +142,12 @@ public class RegisterOther {
 				getHerring, get64Ebi, getPlant, get64Plant,
 				craftWanko, craft100Wanko, craft200Wanko, craft500Wanko, getTableware);
 		AchievementPage.registerAchievementPage(SobaPage);
+
+		if (FMLCommonHandler.instance().getSide() == Side.CLIENT) {
+
+			TileEntitySpecialRenderer render1 = new RenderIshiusu();
+			ClientRegistry.bindTileEntitySpecialRenderer(TileEntityIshiusu.class, render1);
+
+		}
 	}
 }

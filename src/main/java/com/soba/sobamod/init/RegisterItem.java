@@ -1,5 +1,10 @@
 package com.soba.sobamod.init;
 
+import com.soba.sobamod.crops.item.ItemBuckwheatSeed;
+import com.soba.sobamod.crops.item.ItemGreenOnionSeeds;
+import com.soba.sobamod.crops.item.ItemSoySeeds;
+import com.soba.sobamod.crops.item.ItemWasabiSeeds;
+import com.soba.sobamod.crops.item.ItemYamSeeds;
 import com.soba.sobamod.returnplate.ItemOwan;
 import com.soba.sobamod.returnplate.ItemPlate;
 import com.soba.sobamod.returnplate.ItemSeiro;
@@ -306,7 +311,7 @@ public class RegisterItem {
 				.setTextureName("noodlesmod:owan");
 		GameRegistry.registerItem(owan, "owan");
 
-		sobanomi = new ItemSeeds(RegisterBlock.Buckwheat, Blocks.farmland)
+		sobanomi = new ItemBuckwheatSeed()
 				.setCreativeTab(RegisterOther.tabNoodles)
 				.setUnlocalizedName("sobanomi")
 				.setTextureName("noodlesmod:sobanomi");
@@ -510,7 +515,7 @@ public class RegisterItem {
 				.setTextureName("noodlesmod:ebitensoba");
 		GameRegistry.registerItem(ebitensoba, "ebitensoba");
 
-		greenOnion = new ItemSeeds(RegisterBlock.GreenOnion, Blocks.farmland)
+		greenOnion = new ItemGreenOnionSeeds()
 				.setCreativeTab(RegisterOther.tabNoodles)
 				.setUnlocalizedName("greenOnion")
 				.setTextureName("noodlesmod:green_onion");
@@ -522,7 +527,7 @@ public class RegisterItem {
 				.setTextureName("noodlesmod:chop_greoni");
 		GameRegistry.registerItem(chopGreOni, "chopGreOni");
 
-		yam = new ItemSeeds(RegisterBlock.Yam, Blocks.farmland)
+		yam = new ItemYamSeeds()
 				.setCreativeTab(RegisterOther.tabNoodles)
 				.setUnlocalizedName("yam")
 				.setTextureName("noodlesmod:yam");
@@ -534,7 +539,7 @@ public class RegisterItem {
 				.setTextureName("noodlesmod:grated_yam");
 		GameRegistry.registerItem(gratedYam, "gratedYam");
 
-		wasabi = new ItemSeeds(RegisterBlock.Wasabi, Blocks.farmland)
+		wasabi = new ItemWasabiSeeds()
 				.setCreativeTab(RegisterOther.tabNoodles)
 				.setUnlocalizedName("wasabi")
 				.setTextureName("noodlesmod:wasabi");
@@ -597,7 +602,7 @@ public class RegisterItem {
 				.setTextureName("noodlesmod:amajio");
 		GameRegistry.registerItem(amajio, "amajio");
 
-		soyBean = new ItemSeeds(RegisterBlock.Soy, Blocks.farmland)
+		soyBean = new ItemSoySeeds()
 				.setCreativeTab(RegisterOther.tabNoodles)
 				.setUnlocalizedName("soyBean")
 				.setTextureName("noodlesmod:soy_bean");

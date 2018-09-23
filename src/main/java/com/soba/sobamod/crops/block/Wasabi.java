@@ -1,4 +1,4 @@
-package com.soba.sobamod.crops;
+package com.soba.sobamod.crops.block;
 
 import java.util.Random;
 
@@ -18,7 +18,7 @@ import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class Yam extends BlockCrops implements IPlantable, IGrowable {
+public class Wasabi extends BlockCrops implements IPlantable, IGrowable {
 
 	@SideOnly(Side.CLIENT)
 	private IIcon[] iconArray;
@@ -28,7 +28,7 @@ public class Yam extends BlockCrops implements IPlantable, IGrowable {
 		this.iconArray = new IIcon[4];
 
 		for (int i = 0; i < this.iconArray.length; i++) {
-			this.iconArray[i] = iconRegister.registerIcon("noodlesmod:yam_" + (i + 1));
+			this.iconArray[i] = iconRegister.registerIcon("noodlesmod:wasabi_" + (i + 1));
 		}
 	}
 
@@ -83,11 +83,11 @@ public class Yam extends BlockCrops implements IPlantable, IGrowable {
     }
 
 	protected Item func_149866_i() {
-		return RegisterItem.yam;
+		return RegisterItem.wasabi;
 	}
 
 	protected Item func_149865_P() {
-		return RegisterItem.yam;
+		return RegisterItem.wasabi;
 	}
 
 }

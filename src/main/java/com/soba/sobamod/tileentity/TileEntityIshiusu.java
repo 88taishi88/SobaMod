@@ -200,9 +200,9 @@ public class TileEntityIshiusu extends TileEntity implements ISidedInventory {
                         this.grindItem();
                         flag1 = true;
                     }
-                } else {
-                    this.ishiusuCookTime = 0;
                 }
+            } else {
+                this.ishiusuCookTime = 0;
             }
         }
 

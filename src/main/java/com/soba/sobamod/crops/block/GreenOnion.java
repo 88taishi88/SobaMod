@@ -1,4 +1,4 @@
-package com.soba.sobamod.crops;
+package com.soba.sobamod.crops.block;
 
 import java.util.Random;
 
